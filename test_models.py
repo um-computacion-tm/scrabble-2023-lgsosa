@@ -51,19 +51,8 @@ class TestBagTiles(unittest.TestCase):
             len(bag.tiles),
             104,
         )
-       
-    def tomar_mas_fichas(self):
-        bag = BagTiles()
-        self.assertRaises(IndexError)(
-            tiles = bag.take(200))
-        
-    def fichas_que_no_estan(self):
-        bag = BagTiles()
-        invalid_tiles = [Tile('A', 1), Tile('B', 2)]  # Fichas que no están en la bolsa
-        self.assertRaises(ValueError)(
-            bag.put(invalid_tiles))
-    
 
+        
 if __name__ == '__main__':
     unittest.main()
 
