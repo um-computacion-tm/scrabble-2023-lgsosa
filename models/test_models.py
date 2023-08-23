@@ -19,7 +19,7 @@ class TestBagTiles(unittest.TestCase):
         bag = BagTiles()
         self.assertEqual(
             len(bag.tiles),
-            5,
+            102,
         )
         self.assertEqual(
             patch_shuffle.call_count,
@@ -36,7 +36,7 @@ class TestBagTiles(unittest.TestCase):
         tiles = bag.take(2)
         self.assertEqual(
             len(bag.tiles),
-            3,
+            100,
         )
         self.assertEqual(
             len(tiles),
@@ -49,9 +49,15 @@ class TestBagTiles(unittest.TestCase):
         bag.put(put_tiles)
         self.assertEqual(
             len(bag.tiles),
-            7,
+            104,
         )
+       
+    def tomar_mas_fichas(self):
+        bag = BagTiles()
+        self.assertRaises(IndexError)(
+            tiles = bag.take(200))
 
 
 if __name__ == '__main__':
     unittest.main()
+
