@@ -2,7 +2,6 @@ import unittest
 from game_player import Player
 
 
-
 class TestPlayer(unittest.TestCase):
     def test_init(self):
         player_1 = Player()
@@ -11,5 +10,6 @@ class TestPlayer(unittest.TestCase):
             0,
         )
 
-if __name__ == "__main__":
+
+if __name__ == '__main__':
     unittest.main()
