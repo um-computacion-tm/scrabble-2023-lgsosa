@@ -1,6 +1,6 @@
 import unittest
-from game_player import Player
-from models import BagTiles, Tile
+from game.game_player import Player
+from game.models import BagTiles, Tile
 
 
 class TestPlayer(unittest.TestCase):

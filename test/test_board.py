@@ -1,5 +1,5 @@
 import unittest
-from game_board import Board
+from game.game_board import Board
 
 
 class TestBoard(unittest.TestCase):
