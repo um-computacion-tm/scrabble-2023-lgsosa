@@ -1,9 +1,0 @@
-[run]
-source = 
-        app
-        test
-
-omit = 
-        env/*
-        */test/*
-        */__init__.py
