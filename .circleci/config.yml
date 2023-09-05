@@ -1,43 +1,13 @@
 version: 2.1
-
-orbs: 
-  python: circleci/python@0.3.2
-
-jobs: 
-  build-and-test:
-    executor: python/default
-    enviroment:
-      PYTHONPATH=./src 
+jobs:
+  build:
+    docker:
+      - image: cimg/python:3.10.1
     steps:
-      -checkout
-      -python/load-cache
-      -python/install-deps
-      -python/save-cache
-      -python/test
-    
-  lint-add-coverage:
-    executor: python/default 
-    environment :
-      PYTHONPATH= ./src
-    
-    steps: 
-      -checkout
-      -python/load-cache
-      -python/install-deps
-      -python/save-cache
-      -python/test
-      -run:
-        name: Linter
-        command: |
-          flake8 src/
-          flake8 test/
-      -run: 
-        name: Coverage
-        command: |
-          coverage run
-          coverage report
-          
-
-    workflows:
-      main:
-        jobs:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: pip install -r requirements.txt
+      - run:
+          name: Running Tests
+          command: coverage run -m unittest && coverage xml && coverage report -m
