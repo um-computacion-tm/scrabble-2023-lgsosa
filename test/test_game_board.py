@@ -1,5 +1,6 @@
 import unittest
 from game.game_board import Board
+from game.models import Tile
 
 class TestBoard(unittest.TestCase):
     def test_init(self):
@@ -28,6 +29,13 @@ class TestBoard(unittest.TestCase):
         cell = board.grid
         self.assertEqual(cell[7][7].multiplier,2 )
         self.assertEqual(cell[7][7].multiplier_type,'word' )
+
+    def test_place_tile(self):
+        board = Board()
+        tile = Tile('A', 1)
+        self.assertTrue(board.place_tile(7, 7, tile))
+        self.assertFalse(board.place_tile(7, 7, tile))
+
 
 if __name__ == '__main__':
     unittest.main()
