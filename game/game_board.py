@@ -1,4 +1,4 @@
-from game_cell import Cell
+from game.game_cell import Cell
 
 def rotate(mat):
     N = len(mat)
