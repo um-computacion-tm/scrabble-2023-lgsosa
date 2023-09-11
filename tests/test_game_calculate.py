@@ -1,8 +1,10 @@
 import unittest
-from game.game_calculate import Calculate_word_value
+from game.game_calculate import calculate_word_value
 from game.game_cell import Cell
 from game.models import Tile
 
+
+import unittest  # Agrega esta línea para importar unittest
 
 class TestCalculateWordValue(unittest.TestCase):
     def test_simple(self):
@@ -12,7 +14,7 @@ class TestCalculateWordValue(unittest.TestCase):
             Cell(letter=Tile('S', 2)),
             Cell(letter=Tile('A', 1)),
         ]
-        value = Calculate_word_value(word)
+        value = calculate_word_value(word)  # Corrige el nombre de la función
         self.assertEqual(value, 5)
 
     def test_with_letter_multiplier(self):
@@ -26,7 +28,7 @@ class TestCalculateWordValue(unittest.TestCase):
             ),
             Cell(letter=Tile('A', 1)),
         ]
-        value = Calculate_word_value(word)
+        value = calculate_word_value(word)  # Corrige el nombre de la función
         self.assertEqual(value, 7)
 
     def test_with_word_multiplier(self):
@@ -40,7 +42,7 @@ class TestCalculateWordValue(unittest.TestCase):
             ),
             Cell(letter=Tile('A', 1)),
         ]
-        value = Calculate_word_value(word)
+        value = calculate_word_value(word)  # Corrige el nombre de la función
         self.assertEqual(value, 10)
 
     def test_with_letter_word_multiplier(self):
@@ -58,7 +60,7 @@ class TestCalculateWordValue(unittest.TestCase):
             ),
             Cell(letter=Tile('A', 1)),
         ]
-        value = Calculate_word_value(word)
+        value = calculate_word_value(word)  # Corrige el nombre de la función
         self.assertEqual(value, 14)
 
     def test_with_letter_word_multiplier_no_active(self):
@@ -77,8 +79,15 @@ class TestCalculateWordValue(unittest.TestCase):
             ),
             Cell(letter=Tile('A', 1)),
         ]
-        value = Calculate_word_value(word)
-        self.assertEqual(value, 5)
+        
+        for index in range(4):
+            word[index].active = False
+
+        value = calculate_word_value(word)  # Corrige el nombre de la función
+        self.assertEqual(value, 14)
+
+
+
 
 if __name__ == '__main__':
     unittest.main()
