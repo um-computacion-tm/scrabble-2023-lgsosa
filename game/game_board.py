@@ -21,4 +21,14 @@ class Board:
                 return False
             elif position_x + len_word > 1:
                 return True 
+            
+    def test_word_out_of_board(self):
+        board = Board()
+        word = "Facultad"
+        location = (14, 4)
+        orientation = "H"
+
+        word_is_valid = board.validate_word_inside_board(word, location, orientation)
+
+        self.assertFalse(word_is_valid)
 
