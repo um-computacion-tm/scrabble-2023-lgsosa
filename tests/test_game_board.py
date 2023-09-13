@@ -54,6 +54,13 @@ class TestBoard(unittest.TestCase):
     def test_board_is_empty(self):
         board = Board()
         assert board.is_empty == True
+
+    def test_board_is_not_empty(self):
+        board = Board()
+        board.grid[7][7].add_letter(Tile('C', 1))
+        return board.is_empty == False
+
+    
     
 
 
