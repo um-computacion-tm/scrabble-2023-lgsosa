@@ -21,11 +21,20 @@ class ScrabbleGame:
         else:
             self.current_player = self.players[self.players.index(self.current_player)+ 1]
 
-    def test_next_turn_when_player_is_last():
-    # Suponiendo que tenemos 3 jugadores, luego del jugador 3, le toca al jugador 1
-        scrabble_game = ScrabbleGame(players_count=3)
-        scrabble_game.current_player = scrabble_game.players[2]
-
-        scrabble_game.next_turn()
-
-        assert scrabble_game.current_player == scrabble_game.players[0]
+    def validate_word(self, word, location, orientation):
+        '''
+        1- Validar que usuario tiene esas letras
+        2- Validar que la palabra entra en el tablero
+        '''
+        self.board.validate_word_inside_board(word, location, orientation)
+    
+    def get_words():
+        '''
+        Obtener las posibles palabras que se pueden formar, dada una palabra, ubicacion y orientacion 
+        Preguntar al usuario, por cada una de esas palabras, las que considera reales
+        '''
+    
+    def put_words():
+        '''
+        Modifica el estado del tablero con las palabras consideradas como correctas
+        '''
