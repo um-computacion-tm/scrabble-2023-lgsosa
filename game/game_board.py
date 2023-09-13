@@ -3,8 +3,11 @@ from game.models import Tile
 
 
 class Board:
-    def __init__(self):
+    def __init__(self,add_letter=[]):
         self.grid = [[ Cell(1, '') for _ in range(15) ]for _ in range(15)]
+        self.is_empty = True
+        self.grid = [[None] * 15 for _ in range (15)]
+        self.add_letter = add_letter
 
     def validate_word_inside_board(self, word, location: tuple, orientation):
         position_x = location[0]
@@ -24,3 +27,4 @@ class Board:
             
     def validate_word_out_of_board(self, word, location, orientation):
         return not self.validate_word_inside_board(word, location, orientation)
+            
