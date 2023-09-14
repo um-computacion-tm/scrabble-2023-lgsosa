@@ -7,9 +7,3 @@
 :construction: Proyecto en construcción:construction:
 </h4>
 
-# CircleCI
-[![CircleCI]
-# Maintibility
-[![Maintainability]🅰️
-# Coverage
-![Test Coverage]98%
