@@ -33,6 +33,18 @@ class Board:
     def validate_word_out_of_board(self, word, location, orientation):
         return not self.validate_word_inside_board(word, location, orientation)
 
+    def validate_word_place_board(self, word, location, orientation):
+        row, col = location
+        if orientation == "H":
+            for letter in word:
+                if self.grid[row][col].letter != ' ' and self.grid[row][col].letter != letter:
+                    return False
+            col += 1
+        
+        return True
+
+
+
     
     
 
