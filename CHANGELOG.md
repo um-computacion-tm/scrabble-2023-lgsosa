@@ -67,7 +67,7 @@ Add the progress in the changelog.
 
 Add main and test class
 Add tests to game_board
-
+Coverage progress: 99%
 
 
 
