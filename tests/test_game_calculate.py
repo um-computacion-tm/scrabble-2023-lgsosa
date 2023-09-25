@@ -9,10 +9,10 @@ import unittest  # Agrega esta línea para importar unittest
 class TestsCalculateWordValue(unittest.TestCase):
     def test_simple(self):
         word = [
-            Cell(multiplier=1, multiplier_type='letter'),
-            Cell(multiplier=1, multiplier_type='letter'),
-            Cell(multiplier=1, multiplier_type='letter'),
-            Cell(multiplier=1, multiplier_type='letter'),
+            Cell(multiplier=1, multiplier_type='letter',value=1),
+            Cell(multiplier=1, multiplier_type='letter',value=1),
+            Cell(multiplier=1, multiplier_type='letter',value=1),
+            Cell(multiplier=1, multiplier_type='letter',value=1),
         ]
         
         letters = ["C", "A", "S", "A"]
@@ -25,10 +25,10 @@ class TestsCalculateWordValue(unittest.TestCase):
 
     def test_with_letter_multiplier(self):
         word = [
-            Cell(multiplier=1, multiplier_type='letter'),
-            Cell(multiplier=1, multiplier_type='letter'),
-            Cell(multiplier=2, multiplier_type='letter'),  # Usar multiplier y multiplier_type en lugar de letter y value
-            Cell(multiplier=1, multiplier_type='letter'),
+            Cell(multiplier=1, multiplier_type='letter',value=1),
+            Cell(multiplier=1, multiplier_type='letter',value=1),
+            Cell(multiplier=2, multiplier_type='letter',value=1),  # Usar multiplier y multiplier_type en lugar de letter y value
+            Cell(multiplier=1, multiplier_type='letter',value=1),
         ]
         letters = ["C", "A", "S", "A"]
         for i, cell in enumerate(word):
