@@ -69,6 +69,12 @@ Add main and test class
 Add tests to game_board
 Coverage progress: 99%
 
+### [0.0.12] - 2023-09-25
+### Added
+
+Add get_score   
+Coverage progress: 98%
+
 
 
 
