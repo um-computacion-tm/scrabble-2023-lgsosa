@@ -62,6 +62,13 @@ Increases program coverage by improving features
 
 Add the progress in the changelog.
 
+### [0.0.12] - 2023-09-20
+### Added
+
+Add main and test class
+Add tests to game_board
+Coverage progress: 99%
+
 
 
 
