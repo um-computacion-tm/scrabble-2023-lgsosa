@@ -1,6 +1,16 @@
 <h1 align="center"> ScrabbleGame </h1>
 by Luciana Sosa
 
+### [0.0.15] - 2023-09-28
+### Added
+
+Add test_validate_user_has_letters
+Coverage progress: 98%
+
+### [0.0.14] - 2023-09-26
+### Added
+
+Add the changes in the changelog
 
 ### [0.0.13] - 2023-09-25
 ### Added
