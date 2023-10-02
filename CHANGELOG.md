@@ -1,6 +1,10 @@
 <h1 align="center"> ScrabbleGame </h1>
 by Luciana Sosa
 
+### [0.0.17] - 2023-10-02
+### Added
+
+Changes to the game presentation, in main.py
 
 ### [0.0.16] - 2023-10-01
 ### Added
