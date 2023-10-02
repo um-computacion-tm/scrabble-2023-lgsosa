@@ -26,4 +26,8 @@ class Player:
     # Comprobar si todas las letras requeridas están en el "rack"
         return all(rack_letters.count(tile.letter) >= tiles_to_check.count(tile) for tile in tiles_to_check)
 
-    
+    def pass_turn(self, bag_tile= BagTiles()):
+        # Devuelve las fichas utilizadas al BagTiles
+        bag_tile.return_tiles(self.tiles)
+        # Limpia el rack del jugador
+        self.tiles = []

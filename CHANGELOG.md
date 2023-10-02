@@ -5,7 +5,9 @@ by Luciana Sosa
 ### [0.0.16] - 2023-10-01
 ### Added
 
-Add test_past_turn
+Add test_pass_turn
+Add def pass_turn
+coverage 98%
 
 ### [0.0.15] - 2023-09-28
 ### Added
