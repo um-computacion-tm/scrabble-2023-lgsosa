@@ -5,6 +5,7 @@ by Luciana Sosa
 ### Added
 
 Changes in dictionary.py
+2do commit- Changes in main.py, scrabble.py,test_main,get_player_count 
 
 ### [0.0.18] - 2023-10-08
 ### Added
