@@ -1,10 +1,11 @@
-"""
+
 from game.scrabble import ScrabbleGame
-from game.get_player_count import get_player_count  # Asegúrate de que la ruta del archivo sea correcta
+from game.get_player_count import GetPlayerCount
 from game.game_board import Board
 from game.game_calculate import Calculate_word_value
 from io import StringIO
 
+class game_complete:
 
     def show_player(current_player):
         print(f"Jugador {current_player + 1}") 
@@ -29,15 +30,14 @@ from io import StringIO
         # Muestra el estado actualizado del tablero después de jugar la palabra
         show_board(self.board)
 
-
+    
     def show_board(board):
         for row in board.grid:
             row_str = " | ".join(cell.letter if cell.letter else ' ' for cell in row)
             print(row_str)
             print("-" * len(row_str))
 
-"""
-"""
+
 if __name__ == '__main__':
     player_count = get_player_count()  # Llama a la función para obtener la cantidad de jugadores
     game = ScrabbleGame(player_count)
@@ -56,4 +56,3 @@ if __name__ == '__main__':
             print(e)
 
     print('Fin del juego')
-"""
