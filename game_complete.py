@@ -7,10 +7,10 @@ from game.game_player import Player
 
 class GameComplete:
     def __init__(self):
-        print('¡Bienvenido a Scrabble!')
         self.player_count = self.get_player_count()
         self.game = ScrabbleGame(self.player_count)
         self.main_output = StringIO()
+        self.show_board = Board()
 
     def get_player_count(self):
         player_count = None  # Inicializa player_count como None
@@ -26,6 +26,11 @@ class GameComplete:
                 print('Por favor, ingrese un número válido.')
                 player_count = None  # Reinicia player_count
 
+    def show_board(self, board):
+        for row in board.grid:
+            row_str = " | ".join(cell.letter if cell.letter else ' ' for cell in row)
+            print(row_str)
+            print("-" * len(row_str))
 
     def show_player(self, current_player):
         print(f"Jugador {current_player + 1}")
@@ -50,13 +55,6 @@ class GameComplete:
         # Muestra el estado actualizado del tablero después de jugar la palabra
         show_board
 
-
-
-    def show_board(self, board):
-        for row in board.grid:
-            row_str = " | ".join(cell.letter if cell.letter else ' ' for cell in row)
-            print(row_str)
-            print("-" * len(row_str))
 
 if __name__ == '__main__':
     print('¡Bienvenido a Scrabble!')

@@ -5,6 +5,7 @@ by Luciana Sosa
 ### Added
 
 Changes main, get_player_count and game_complete
+Changes game_complete
 
 ### [0.0.23] - 2023-10-24
 ### Added
