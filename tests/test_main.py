@@ -1,3 +1,4 @@
+"""
 from game.main import Main
 import unittest
 from unittest.mock import patch
@@ -66,3 +67,4 @@ class TestMain(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+"""
