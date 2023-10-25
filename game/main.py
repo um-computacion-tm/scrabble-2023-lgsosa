@@ -2,6 +2,7 @@ from io import StringIO
 from game.scrabble import ScrabbleGame
 from game.get_player_count import GetPlayerCount
 
+"""
 class Main:
     def __init__(self):
         print('¡Bienvenido a Scrabble!')
@@ -67,3 +68,4 @@ class Main:
 if __name__ == '__main__':
     main = Main()
     main.play()
+"""
