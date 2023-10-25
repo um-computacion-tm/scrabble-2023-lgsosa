@@ -8,11 +8,11 @@ class GetPlayerCount:
     def get_player_count(self):
         while True:
             try:
-                self.player_count = int(input('Ingrese la cantidad de jugadores (1-4): '))
+                self.player_count = int(input('Ingrese la cantidad de jugadores (2-4): '))
                 if 1 <= self.player_count <= 4:
                     break
                 else:
-                    print('Por favor, ingrese un número entre 1 y 4.')
+                    print('Por favor, ingrese un número entre 2 y 4.')
             except ValueError:
                 print('Por favor, ingrese un número válido.')
 
