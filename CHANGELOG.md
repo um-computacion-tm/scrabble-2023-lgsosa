@@ -1,6 +1,11 @@
 <h1 align="center"> ScrabbleGame </h1>
 by Luciana Sosa
 
+### [0.0.24] - 2023-10-27
+### Added
+
+Changes board, player, main, scrabble, calculate_word_value
+
 ### [0.0.24] - 2023-10-25
 ### Added
 
