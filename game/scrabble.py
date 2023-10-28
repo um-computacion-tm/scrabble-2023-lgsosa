@@ -76,3 +76,12 @@ class ScrabbleGame:
 
     def put_initial_tiles_bag(self):
         self.bag_tiles.initial_tiles()
+
+    def show_board(self, board):
+        print('\n  |' + ''.join([f' {str(row_index).rjust(2)} ' for row_index in range(len(board.grid))]))
+        for row_index, row in enumerate(board.grid):
+            print(
+                str(row_index).rjust(2) +
+                '| ' +
+                ' '.join([repr(cell) for cell in row])
+            )

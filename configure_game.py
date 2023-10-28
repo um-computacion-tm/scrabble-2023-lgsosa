@@ -1,6 +1,8 @@
 from game.scrabble import ScrabbleGame
 from game.models import Tile
 from game.game_board import Board
+import random
+from game.models import BagTiles
 
 class Configure:
     def __init__(self):
@@ -8,20 +10,11 @@ class Configure:
         self.player_count = self.get_player_count()
         self.game = ScrabbleGame(self.player_count)
         self.board = self.game.get_board()
+        self.bag = BagTiles() 
 
     def iniciar_juego(self):
-        while True:
-            try:
-                num_players = int(input("Ingrese la cantidad de jugadores: "))
-                if num_players <= 1 or num_players > 4:
-                    raise ValueError
-                break
-            except ValueError:
-                print("Valor invalido, elegir entre 2-4 jugadores.")
-        scrabble_game = ScrabbleGame(players_count = num_players)
-        print("Cantidad de jugadores: ", len(scrabble_game.players))
+       pass
           
-    
     def valid_player_count(self,player_count):
         try:
             count = int(player_count)
@@ -35,11 +28,7 @@ class Configure:
             if self.valid_player_count(player_count) is True:
                 return int(player_count)
             print('Valor ingresado no valido')
-
-    def show_current_player(self):
-        player_number = self.game.current_player.id
-        print(f'Turno del jugador {player_number}')
-    ###
+  
     def show_board(self, board):
         print('\n  |' + ''.join([f' {str(row_index).rjust(2)} ' for row_index in range(len(board.grid))]))
         for row_index, row in enumerate(board.grid):
@@ -48,7 +37,17 @@ class Configure:
                 '| ' +
                 ' '.join([repr(cell) for cell in row])
             )
-    ###
+
+
+
+    def show_current_player(self):
+        total_players = self.player_count  # Utiliza el número de jugadores ya almacenado
+        player_number = self.game.current_player.id
+        print(f'Turno del jugador {player_number} de {total_players} jugadores')
+### HASTA ACÁ FUNCIONA ###
+
+    
+
     def initial_tiles(self):
         self.game.put_initial_tiles_bag()
         self.game.put_tiles_in_rack()
@@ -66,6 +65,11 @@ class Configure:
                 break
             elif action == 3:
                 self.display_scores()
+            
+    ### HASTA ACÁ FUNCIONA ###
+    
+
+
     def next_turn(self):
         self.game.next_turn()
 
@@ -112,8 +116,8 @@ class Configure:
     def play_game(self):
         print('¡VAMOS A JUGAR!')
         self.initial_tiles()
-        self.game.players[0].rack = [Tile('H', 4), Tile('O',1), Tile('L',1), Tile('A',1)]
-        self.game.show_board()
+        self.game.players[0].rack = self.bag.take(7)  # Obtener 7 letras aleatorias
+        self.game.show_board(self.board)
         while not self.game.game_over():
             self.next_turn()
             self.show_current_player()
@@ -124,4 +128,4 @@ class Configure:
 if __name__ == "__main__":
     main = Configure()
     game = ScrabbleGame(2)
-    main.show_board(main.board)
+    main.play_game()
