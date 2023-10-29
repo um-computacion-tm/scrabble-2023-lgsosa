@@ -1,6 +1,11 @@
 <h1 align="center"> ScrabbleGame </h1>
 by Luciana Sosa
 
+### [0.0.27] - 2023-10-29
+### Added
+
+Changes in configure_gam, models and players
+
 ### [0.0.26] - 2023-10-28
 ### Added
 

@@ -3,6 +3,7 @@ from game.models import Tile
 from game.game_board import Board
 import random
 from game.models import BagTiles
+from game.game_player import Player
 
 class Configure:
     def __init__(self):
@@ -11,6 +12,7 @@ class Configure:
         self.game = ScrabbleGame(self.player_count)
         self.board = self.game.get_board()
         self.bag = BagTiles() 
+        self.player = Player()
 
     def iniciar_juego(self):
        pass
@@ -54,21 +56,50 @@ class Configure:
     ###
 
     def take_turn(self):
-        print(f'Tus fichas son: {self.game.show_rack()}')
+        current_player = self.game.current_player  # Obtener el jugador actual
+        print(f'Tus fichas son: {current_player.display_rack()}')
         while True:
-            action = int(input('¿Qué vas hacer? JUGAR(1) / PASAR(2) / PUNTUACION(3): '))
+            action = int(input('¿Qué vas hacer? JUGAR(1) / CAMBIAR LETRA (2) / PASAR(3) / RENDIRTE(4): '))  #hasta acá funciona 
             action = action
             if action == 1:
-                self.play()
-                break
-            elif action == 2:
-                break
-            elif action == 3:
-                self.display_scores()
-            
-    ### HASTA ACÁ FUNCIONA ###
-    
+                while True:
+                    word = input('Ingresar palabra: ')
+                    location_x = int(input('Ingresar columna (0-14): '))
+                    location_y = int(input('Ingrese fila (0-14): '))
+                    location = (location_x, location_y)
+                    orientation = input('Ingresar (V/H): ')
+                    if self.game.scrabble_validate_word(word, location, orientation):
+                        self.game.put_word(word, location, orientation)
+                        self.add_score(word, location, orientation)
+                        break
+                    elif word == 0:
+                        break
+                    else:
+                        print("Valor ingresado no válido, ¿Desea volver al menú principal? y/n")
+                        while True:
+                            choice = input().strip().lower()
+                            if choice == "y":
+                                return  # Esto saldrá de la función y volverá al menú principal
+                            elif choice == "n":
+                                break  # Continuar jugando dentro del bucle
+                            else:
+                                print("Opción no válida. Por favor, ingrese 'y' para volver al menú principal o 'n' para continuar jugando.")
 
+
+                    
+            elif action == 2:
+                pass
+                #terminar
+            elif action == 3:
+                self.next_turn()
+                break
+            elif action == 4:
+                self.surrender()
+                #terminar
+            else:
+                print("Opción no válida. Por favor, elige una opción válida.")
+
+    
 
     def next_turn(self):
         self.game.next_turn()
@@ -101,29 +132,25 @@ class Configure:
             index = int(input("Elige la ficha que vas a intercambiar (1-7): "))
             self.game.current_player.exchange_tiles(index, self.game.bag_tiles)
 
-    def reorganize(self):
-        while True:
-            self.game.shuffle_rack()
-            print(f'{self.game.show_rack()}')
-            organize = input("Si queres terminar apreta la tecla Y sino cualquier tecla ")
-            organize = organize.strip().upper()
-            if organize == "Y":
-                break
 
     def add_score(self, word, location, orientation):
         self.game.scrabble_word_calculate_score(word, location, orientation)
 
     def play_game(self):
-        print('¡VAMOS A JUGAR!')
         self.initial_tiles()
-        self.game.players[0].rack = self.bag.take(7)  # Obtener 7 letras aleatorias
+        for player in self.game.players:
+            player.rack = self.bag.take(7)  # Asignar 7 letras aleatorias a cada jugador
         self.game.show_board(self.board)
         while not self.game.game_over():
             self.next_turn()
             self.show_current_player()
             self.take_turn()
+            self.game.show_board(self.board)  # Muestra el tablero después de cada turno
+
         print('¡SE ACABO LO QUE SE DABA!')
         self.display_final_scores()
+
+
 
 if __name__ == "__main__":
     main = Configure()
