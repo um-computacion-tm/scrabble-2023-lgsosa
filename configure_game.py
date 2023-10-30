@@ -57,7 +57,7 @@ class Configure:
 
     def take_turn(self):
         current_player = self.game.current_player  # Obtener el jugador actual
-        print(f'Tus fichas son: {current_player.display_rack()}')
+        print(f'{self.game.current_player_name()}: Tienes las siguientes fichas: {current_player.display_rack()}')
         while True:
             action = int(input('¿Qué vas hacer? JUGAR(1) / CAMBIAR LETRA (2) / PASAR(3) / RENDIRTE(4): '))  #hasta acá funciona 
             action = action
@@ -83,7 +83,7 @@ class Configure:
                             elif choice == "n":
                                 break  # Continuar jugando dentro del bucle
                             else:
-                                print("Opción no válida. Por favor, ingrese 'y' para volver al menú principal o 'n' para continuar jugando.")
+                                print("Opción no válida. Por favor, ingrese 'y' para volver al menú principal o 'n' para continuar jugando.") #funciona
 
 
                     
@@ -91,7 +91,7 @@ class Configure:
                 pass
                 #terminar
             elif action == 3:
-                self.next_turn()
+                self.game.next_turn
                 break
             elif action == 4:
                 self.surrender()
@@ -99,10 +99,9 @@ class Configure:
             else:
                 print("Opción no válida. Por favor, elige una opción válida.")
 
-    
-
-    def next_turn(self):
-        self.game.next_turn()
+        if self.game.game_over():
+            print('¡SE ACABÓ EL JUEGO!')
+            self.display_final_scores()
 
     def show_scores(self):
         sorted_players = sorted(self.game.players, key=lambda player: player.score, reverse=True) 
@@ -132,27 +131,48 @@ class Configure:
             index = int(input("Elige la ficha que vas a intercambiar (1-7): "))
             self.game.current_player.exchange_tiles(index, self.game.bag_tiles)
 
+    def surrender(self):
+        print(f'Jugador {self.game.current_player.id} se ha rendido. ¡Fin del juego!')
+        self.display_final_scores()
+
+    def display_final_scores(self):
+        sorted_players = sorted(self.game.players, key=lambda player: player.score, reverse=True)
+        print("Puntajes finales de los jugadores:")
+        for player in sorted_players:
+            print(f"Jugador {player.id}: Puntaje = {player.score}")
+            
+
 
     def add_score(self, word, location, orientation):
         self.game.scrabble_word_calculate_score(word, location, orientation)
 
     def play_game(self):
-        self.initial_tiles()
-        for player in self.game.players:
-            player.rack = self.bag.take(7)  # Asignar 7 letras aleatorias a cada jugador
-        self.game.show_board(self.board)
-        while not self.game.game_over():
-            self.next_turn()
-            self.show_current_player()
-            self.take_turn()
-            self.game.show_board(self.board)  # Muestra el tablero después de cada turno
+        play_again = 'y'  # Inicializa play_again como 'y' para comenzar el juego
 
-        print('¡SE ACABO LO QUE SE DABA!')
-        self.display_final_scores()
+        while play_again.lower() == 'y':
+            self.initial_tiles()
+            for player in self.game.players:
+                player.rack = self.bag.take(7)  # Asignar 7 letras aleatorias a cada jugador
+            self.game.show_board(self.board)
+            while not self.game.game_over():
+                self.game.next_turn()  # Cambiar el turno utilizando self.game
+                self.show_current_player()
+                self.take_turn()
+                self.game.show_board(self.board)  # Muestra el tablero después de cada turno
+
+            print('¡SE ACABO LO QUE SE DABA!')
+            self.display_final_scores()
+
+            # Pregunta si los jugadores desean volver a jugar
+            play_again = input("¿Quieres volver a jugar? (y/n): ").strip().lower()
+
+        print("¡Gracias por jugar al Scrabble!")
+
+
+
 
 
 
 if __name__ == "__main__":
     main = Configure()
-    game = ScrabbleGame(2)
     main.play_game()
