@@ -4,7 +4,8 @@ by Luciana Sosa
 ### [0.0.27] - 2023-10-29
 ### Added
 
-Changes in configure_gam, models and players
+Changes in configure_game, models and players
+Changes in scrabble and configure_game
 
 ### [0.0.26] - 2023-10-28
 ### Added

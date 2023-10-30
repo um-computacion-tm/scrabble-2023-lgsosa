@@ -25,12 +25,19 @@ class ScrabbleGame:
     def next_turn(self):
         if self.current_player is None:
             self.current_player = self.players[0]
-        elif self.current_player == self.players[-1]:
-            self.current_player = self.players[0]
         else:
-            player_turn = self.players.index(self.current_player) + 1
-            self.current_player = self.players[player_turn]
+            current_index = self.players.index(self.current_player)
+            next_index = (current_index + 1) % len(self.players)
+            self.current_player = self.players[next_index]
         self.turn += 1
+
+    def current_player_name(self):
+        if self.current_player:
+            return f'Jugador {self.current_player.id}'
+        else:
+            return 'No hay jugador actual'
+
+
     ###
     def scrabble_validate_word(self, word, location, orientation):
         if self.dic.verify_word(word) is True:
@@ -85,3 +92,5 @@ class ScrabbleGame:
                 '| ' +
                 ' '.join([repr(cell) for cell in row])
             )
+
+
