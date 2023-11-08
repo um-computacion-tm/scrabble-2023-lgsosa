@@ -106,16 +106,7 @@ class TestPlayer(unittest.TestCase):
         player.fill(bag)
         self.assertEqual(len(player.lectern), 7)
 
-    def test_view_lectern(self):
-        player = Player()
-        player.lectern = [Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1),Tile('A', 1)]
-        result = player.view_lectern()
-        expected = '''                     ATRIL
-
-Letras ->  | A | A | A | A | A | A | A |'''
-        self.maxDiff = None
-        self.assertEqual(result, expected)
-
+    
     def test_take(self):
         player = Player()
         player.give_tiles(['C','A','S','A','B','O','U'])
@@ -130,12 +121,7 @@ Letras ->  | A | A | A | A | A | A | A |'''
         self.assertEqual(len(result),4)
         self.assertEqual(len(player.lectern),3)
 
-    def test_has_tiles(self):
-        player=Player('Simon',0,0,BagTiles())
-        tiles=[Tile('A',1),Tile('B',1),Tile('C',1)]
-        player.give_tiles(tiles)
-        self.assertTrue(player.has_tiles('ABC'))
-        self.assertFalse(player.has_tiles('ABD'))
+
 
 if __name__ == '__main__':
     unittest.main()

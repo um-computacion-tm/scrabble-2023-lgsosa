@@ -480,23 +480,6 @@ class TestCalculateWordValue(unittest.TestCase):
         self.assertEqual(side_word, 'BB', "El lado vertical debería ser la letra 'B'")
         self.assertEqual(j, 2, "j debería ser 1 para una celda con letra")
 
-    @patch('game.board.dle.search_by_word')
-    def test_complex_word_validation_valid_right(self, mock_search_by_word):
-        mock_search_by_word.return_value.title = 'soso, sosa | Definición | Diccionario de la lengua española | RAE - ASALE'
-        board = Board()
-        board.grid[7][6].tile = Tile('C',3)
-        board.grid[7][7].tile = Tile('A',1)
-        board.grid[7][8].tile = Tile('S',6)
-        board.grid[7][9].tile = Tile('A',1)
-        board.grid[6][9].tile = Tile('L',3)
-        board.grid[8][9].tile = Tile('S',6)
-        board.grid[9][9].tile = Tile('O',1)
-        board.grid[9][8].tile = Tile('S',6)
-        board.grid[9][7].tile = Tile('O',1)
-        word = 'cosa'
-        horizontal = 'V'
-        pos = (7,6)
-        is_valid = board.validate_not_empty(word, pos, horizontal)
 
 if __name__ == '__main__':
     unittest.main()

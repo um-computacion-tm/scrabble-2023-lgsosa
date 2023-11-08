@@ -1,6 +1,10 @@
 <h1 align="center"> ScrabbleGame </h1>
 by Luciana Sosa
 
+### [0.0.35] - 2023-11-08
+### Added
+
+touch-ups
 
 ### [0.0.34] - 2023-11-07
 ### Added

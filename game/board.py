@@ -10,9 +10,10 @@ class Board:
 
     def board_in_terminal(self):
         view = ' \n'
-        view += '    0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 \n'
+        view += '    0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 \n'
+        letters = 'ABCDEFGHIJKLMNO'
         for i, row in enumerate(self.grid):
-            view += f"{i:2d}  "  # Números de fila
+            view += f"{letters[i]}   "
             for cell in row:
                 if cell.tile is None:
                     if cell.multiplier_type == 'letter' and cell.multiplier == 3:
