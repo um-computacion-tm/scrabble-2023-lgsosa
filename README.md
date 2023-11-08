@@ -6,3 +6,9 @@
 
 <h4 align="center">
                 🏁 Proyecto Finalizado 🏁
+
+# maintainability
+[![Maintainability](https://api.codeclimate.com/v1/badges/501cec3723d1db83d4e8/maintainability)](https://codeclimate.com/github/um-computacion-tm/scrabble-2023-lgsosa/maintainability)
+
+# test coverage
+[![Test Coverage](https://api.codeclimate.com/v1/badges/42bb4f6e2a7cece8f898/test_coverage)](https://codeclimate.com/github/um-computacion-tm/scrabble-2023-lgsosa/test_coverage)
