@@ -269,6 +269,54 @@ O   3W|  |  |2L|  |  |  |3W|  |  |  |2L|  |  |3W|
             main.menu_put_word(scrabble_game)
             # Agrega aserciones para verificar que la función maneja adecuadamente la falta de fichas
 
+    @patch('builtins.input', side_effect=[1])
+    def test_menu_salir(self, mock_input):
+        main = Main()
+        scrabble_game = ScrabbleGame(2)
+        scrabble_game.players[0].name = 'Jugador 1'
+        scrabble_game.players[1].name = 'Jugador 2'
+        scrabble_game.next_turn()
+        output_buffer = io.StringIO()
+        sys.stdout = output_buffer
+        main.menu_salir(scrabble_game)
+        sys.stdout = sys.__stdout__
+        printed_output = output_buffer.getvalue()
+        output_buffer.close()
+        self.assertTrue(scrabble_game.game_over)
+        self.assertIn("Gracias por jugar", printed_output)
+    
+    @patch('builtins.input', side_effect=[2])
+    def test_main_valid_input(self, mock_input):
+        main = Main()
+        result = main.main()
+        self.assertEqual(result, 2)
+
+    @patch('builtins.input', side_effect=[5, 2])
+    def test_main_invalid_input_then_valid_input(self, mock_input):
+        main = Main()
+        output_buffer = io.StringIO()
+        sys.stdout = output_buffer
+        result = main.main()
+        sys.stdout = sys.__stdout__
+        printed_output = output_buffer.getvalue()
+        output_buffer.close()
+        expected = 'Bienvenido a Scrabble\nValor no valido\n'
+        self.assertEqual(printed_output, expected)
+        self.assertEqual(result, 2)
+
+    @patch('builtins.input', side_effect=[2, 1, 2])
+    def test_menu_board_as(self, mock_input):
+        main = Main()
+        scrabble_game = ScrabbleGame(2)
+        scrabble_game.players[0].name = 'Jugador 1'
+        scrabble_game.players[1].name = 'Jugador 2'
+        scrabble_game.next_turn()
+        output_buffer = io.StringIO()
+        sys.stdout = output_buffer
+        main.menu_board(scrabble_game)
+        sys.stdout = sys.__stdout__
+        printed_output = output_buffer.getvalue()
+        output_buffer.close()
 
 if __name__ == '__main__':
     unittest.main()
