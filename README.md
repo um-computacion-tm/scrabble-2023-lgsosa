@@ -14,7 +14,7 @@
 5°- build the docker image: -docker build -t image_name (in the name of the image give it whatever name you want, I called it dockerscrabble)
 6°- Run Docker image: docker run -it image_name (In my case it would be: docker run -it dockerscrabble)
 
-<h4 align="center">
+
                 🏁 Proyecto Finalizado 🏁
 
 # maintainability
