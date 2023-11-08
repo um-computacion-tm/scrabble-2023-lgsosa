@@ -317,6 +317,82 @@ O   3W|  |  |2L|  |  |  |3W|  |  |  |2L|  |  |3W|
         sys.stdout = sys.__stdout__
         printed_output = output_buffer.getvalue()
         output_buffer.close()
+        
+class TestPlayerAdditional(unittest.TestCase):
+    def test_init_with_custom_parameters(self):
+        player = Player(name='John', number=1, points=20)
+        self.assertEqual(player.name, 'John')
+        self.assertEqual(player.number, 1)
+        self.assertEqual(player.points, 20)
+        self.assertEqual(len(player.lectern), 0)
+
+    def test_change_tiles_with_valid_indices(self):
+        player = Player()
+        player.give_tiles(['X', 'Y', 'Z'])
+        old_tiles = player.change_tiles(old_tiles_index=[2, 3], new_tiles=['A', 'B'])
+        self.assertEqual(player.lectern, ['X', 'A', 'B'])
+        self.assertEqual(old_tiles, ['Y', 'Z'])
+
+    def test_take_tiles_with_valid_word(self):
+        player = Player()
+        player.give_tiles(['C', 'A', 'T', 'S', 'R', 'A', 'E'])
+        tiles = player.take_tiles('CAT')
+        self.assertEqual(tiles, ['C', 'A', 'T'])
+        self.assertEqual(player.lectern, ['S', 'R', 'A', 'E'])
+
+    def test_take_tiles_with_invalid_word(self):
+        player = Player()
+        player.give_tiles(['A', 'B', 'C'])
+        tiles = player.take_tiles('DOG')
+        self.assertEqual(tiles, [])
+        self.assertEqual(player.lectern, ['A', 'B', 'C'])
+
+    def test_view_lectern_with_empty_lectern(self):
+        player = Player()
+        lectern_str = player.view_lectern()
+        self.assertEqual(lectern_str, 'Letras -> ')
+
+    def test_view_lectern_with_non_empty_lectern(self):
+        player = Player()
+        player.give_tiles(['A', 'B', 'C', 'D'])
+        lectern_str = player.view_lectern()
+        self.assertEqual(lectern_str, 'Letras -> A | B | C | D')
+    
+    def test_fill_lectern_with_no_remaining_tiles(self):
+        player = Player()
+        bag = BagTiles()
+        bag.take(100)  # Agotar las fichas en la bolsa
+        player.fill(bag)
+        self.assertEqual(len(player.lectern), 0)  # El atril debe permanecer vacío
+
+    def has_tiles(self, word):
+        # Crear copia del atril del jugador
+        lectern_copy = self.lectern[:]
+        
+        # Recorrer cada letra en la palabra
+        for letter in word:
+            if letter in lectern_copy:
+                lectern_copy.remove(letter)
+            else:
+                return False  # No se encuentra una letra necesaria en el atril
+
+        return True  # Todas las letras necesarias se encontraron en el atril
+
+
+    def test_has_tiles_with_invalid_word(self):
+        player = Player()
+        player.give_tiles(['H', 'E', 'L', 'L', 'O'])
+        self.assertFalse(player.has_tiles('GOODBYE'))
+
+    def test_split_word_with_special_characters(self):
+        player = Player()
+        splited_word = player.split_word('H*E+L/L^O')
+        self.assertEqual(splited_word, ['H', '*', 'E', '+', 'L', '/', 'L', '^', 'O'])
+
+    def test_split_word_with_space(self):
+        player = Player()
+        splited_word = player.split_word('H E L L O')
+        self.assertEqual(splited_word, ['H', ' ', 'E', ' ', 'L', ' ', 'L', ' ', 'O'])
 
 if __name__ == '__main__':
     unittest.main()
