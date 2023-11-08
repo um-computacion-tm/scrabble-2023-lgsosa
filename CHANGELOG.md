@@ -1,6 +1,47 @@
 <h1 align="center"> ScrabbleGame </h1>
 by Luciana Sosa
 
+
+### [0.0.34] - 2023-11-07
+### Added
+
+Last revision and correction of details
+Change the main because he had bad lefts and rights
+
+### [0.0.33] - 2023-11-06
+### Added
+
+I add the last details for delivery.
+I haven't uploaded my changes yet.
+
+### [0.0.32] - 2023-11-03
+### Added
+
+Improved coverage and the player menu now looks cleaner.
+
+### [0.0.31] - 2023-11-02
+### Added
+
+Add more tests for coverage
+
+### [0.0.30] - 2023-11-01
+### Added
+
+I go back to fix errors in my bagtiles and my main
+Changes in the board
+
+### [0.0.29] - 2023-10-31
+### Added
+
+Changes in the test_main for coverage
+Changes in the main 
+
+### [0.0.28] - 2023-10-30
+### Added
+
+changes throughout the game (my changes are not uploaded so that they are not plagiarized)
+I deleted my way of applying the dictionary, it gave me many errors
+
 ### [0.0.27] - 2023-10-29
 ### Added
 
