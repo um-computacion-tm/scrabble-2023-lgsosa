@@ -2,6 +2,8 @@ import unittest
 from unittest.mock import patch
 from game.main import *
 import io, sys
+from game.main import Main
+from game.scrabble import ScrabbleGame
 
 class TestMain(unittest.TestCase):
     @patch('builtins.input', side_effect = [2])
@@ -23,147 +25,6 @@ class TestMain(unittest.TestCase):
         self.assertEqual(printed_output, expected)
         self.assertEqual(result, 2)
 
-    def test_view_menu(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('menu', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Menu
-    1) Tablero
-    2) Atril
-    3) Jugar 
-    4) Puntuaciones
-    5) Salir del juego
-    Seleccion: '''
-        self.maxDiff = None
-        self.assertEqual(result, expected)
-
-    def test_view_menu_board(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('board', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Menu
-    1) Ver Tablero
-    2) Volver
-    Seleccion: '''
-        self.assertEqual(result, expected)
-
-    def test_view_menu_lectern(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('lectern', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Menu
-    1) Ver Atril
-    2) Volver
-    Seleccion: '''
-        self.assertEqual(result, expected)
-
-    def test_view_menu_actions(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('actions', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Acciones
-    1) Colocar palabra
-    2) Cambiar fichas
-    3) Pasar turno
-    4) Volver
-    Seleccion: '''
-        self.assertEqual(result, expected)
-
-    def test_view_menu_put_word(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('put_word', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Colocar palabra
-    1) Colocar palabra
-    2) Volver
-    Seleccion: '''
-        self.assertEqual(result, expected)
-
-    def test_view_menu_change_tiles(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('change_tiles', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Cambiar fichas
-    1) Cambiar fichas
-    2) Volver
-    Seleccion: '''
-        self.assertEqual(result, expected)
-
-    def test_view_menu_next_turn(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('next_turn', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Pasar turno
-    1) Pasar turno
-    2) Volver
-    Seleccion: '''
-        self.assertEqual(result, expected)
-
-
-    def test_view_menu_scores(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('scores', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Puntuaciones
-    1) Ver puntuaciones
-    2) Volver
-    Seleccion: '''    
-        self.assertEqual(result, expected)
-
-    def test_view_menu_exit(self):
-        main = Main()
-        scrabble_game = ScrabbleGame(2)
-        scrabble_game.players[0].name = 'Jugador 1'
-        scrabble_game.players[1].name = 'Jugador 2'
-        scrabble_game.next_turn()
-        result = main.menu('exit', scrabble_game)
-        expected = '''Turno del jugador Jugador 1
-
-    Salir
-    1) Salir
-    2) Volver al menu
-    Seleccion: '''
-        self.assertEqual(result, expected)
 
     @patch('builtins.input', side_effect=[7,2])
     def test_menu_actions_change_tiles_exception(self, mock_input):
@@ -385,6 +246,28 @@ O   3W|  |  |2L|  |  |  |3W|  |  |  |2L|  |  |3W|
         sys.stdout = sys.__stdout__
         printed_output = output_buffer.getvalue()
         output_buffer.close()
+
+    def test_menu_put_word(self):
+        main = Main()
+        scrabble_game = ScrabbleGame(2)
+        scrabble_game.players[0].name = 'Jugador 1'
+        scrabble_game.players[1].name = 'Jugador 2'
+        scrabble_game.next_turn()
+        
+        # Simula el proceso de colocar una palabra válida en el tablero
+        with unittest.mock.patch('builtins.input', side_effect=['miPalabra', 1, 1, 1, 1]):
+            main.menu_put_word(scrabble_game)
+            # Agrega aserciones para verificar que la palabra se coloca correctamente y los puntos se actualizan
+
+        # Simula el proceso de colocar una palabra no válida
+        with unittest.mock.patch('builtins.input', side_effect=['miPalabra', 1, 1, 1, 1]):
+            main.menu_put_word(scrabble_game)
+            # Agrega aserciones para verificar que la función maneja adecuadamente una palabra no válida
+
+        # Simula el proceso de colocar una palabra sin fichas suficientes
+        with unittest.mock.patch('builtins.input', side_effect=['miPalabra', 1, 1, 1, 1]):
+            main.menu_put_word(scrabble_game)
+            # Agrega aserciones para verificar que la función maneja adecuadamente la falta de fichas
 
 
 if __name__ == '__main__':

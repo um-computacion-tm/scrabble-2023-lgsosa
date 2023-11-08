@@ -9,71 +9,75 @@ class Main():
         print("Bienvenido a Scrabble")
         while True:
             try:
-                players_count = int(input("Ingrese el numero de jugadores 2-4: "))
-                if players_count <= 1   or players_count > 4:
+                players_count = int(input("Ingrese el número de jugadores 2-4: "))
+                if players_count < 2 or players_count > 4:
                     raise ValueError
                 break
             except ValueError:
-                print ("Valor no valido")
+                print("Valor no valido")
+
         return players_count
 
     def menu(self, menu, scrabble_game):
         show_menu = f'Turno del jugador {scrabble_game.current_player.name}\n\n'
         if menu == 'menu':
-            show_menu +=  '''               ¿Qué desea hacer?
-
-    Tablero (1) / Rack (2) / Jugar (3) / Score (4) / Salir (5)
-
-    Seleccion: '''
-        elif menu == 'board':
-            show_menu +=  '''    ¿Qué desea hacer?
-
-    Ver Tablero (1) / Atras (2)
-
-    Seleccion: '''
-        elif menu == 'lectern':
-            show_menu +=  '''    ¿Qué desea hacer?
-
-    Ver Rack (1) / Atras (2)
+            show_menu += '''
             
-    Seleccion: '''
+¿Qué desea hacer?
+
+Tablero (1) / Rack (2) / Jugar (3) / Score (4) / Salir (5)
+
+Seleccion: '''
+        elif menu == 'board':
+            show_menu += '''¿Qué desea hacer?
+
+Ver Tablero (1) / Atrás (2)
+
+Seleccion: '''
+        elif menu == 'lectern':
+            show_menu += '''¿Qué desea hacer?
+
+Ver Rack (1) / Atrás (2)
+
+Seleccion: '''
         elif menu == 'actions':
-            show_menu += '''    ¿Qué desea hacer?
+            show_menu += '''¿Qué desea hacer?
 
-    Colocar palabra (1) / Cambiar fichas (2) / Pasar (3) / Atrás (4)
+Colocar palabra (1) / Cambiar fichas (2) / Pasar (3) / Atrás (4)
 
-    Seleccion: ''' 
+Seleccion: '''
         elif menu == 'put_word':
-            show_menu += '''    ¿Quiere empezar  a jugar??
+            show_menu += '''¿Quiere empezar a jugar??
 
-    Colocar palabra (1) / Atrás (2)
+Colocar palabra (1) / Atrás (2)
 
-    Seleccion: '''
+Seleccion: '''
         elif menu == 'change_tiles':
-            show_menu += '''    ¿Quiere cambiar sus fichas?
+            show_menu += '''¿Quiere cambiar sus fichas?
 
-    Cambiar fichas / Volver (2)
+Cambiar fichas / Volver (2)
 
-    Seleccion: '''
+Seleccion: '''
         elif menu == 'next_turn':
-            show_menu += '''    ¿Realmente quiere pasar turno?
+            show_menu += '''¿Realmente quiere pasar turno?
 
-    Pasar turno (1) / Volver (2)
-    
-    Seleccion: '''
+Pasar turno (1) / Volver (2)
+
+Seleccion: '''
         elif menu == 'scores':
-            show_menu += '''    ¿Desea ver sus puntos?
+            show_menu += '''¿Desea ver sus puntos?
 
-    Ver Score (1) / Atras (2)
+Ver Score (1) / Atrás (2)
 
-    Seleccion: '''
+Seleccion: '''
         elif menu == 'exit':
-            show_menu += '''    ¿Realmente se quiere ir?
+            show_menu += '''¿Realmente se quiere ir?
 
-    Salir (1) / Atras (2)
+Salir (1) / Atrás (2)
 
-    Seleccion: '''
+Seleccion: '''
         return show_menu
+
    
     def play_game(self, scrabble_game):
         while not scrabble_game.game_over:
@@ -82,13 +86,9 @@ class Main():
             # Muestra el tablero y el rack del jugador actual
             print(scrabble_game.view_board())
             for player in scrabble_game.players:
-                if player == scrabble_game.current_player:
-                    # Es el turno del jugador actual, muestra su rack
+            
                     rack_display = ' | '.join(str(tile) if tile != 'Joker' else 'J' for tile in player.lectern)
                     print(f"Rack del jugador {player.name}: Letras -> {rack_display}")
-                else:
-                    # No es el turno del jugador, muestra un mensaje genérico
-                    print(f"Es el turno de {player.name}. Esperando...")
 
             try:
                 option = int(input(self.menu('menu', scrabble_game)))
@@ -164,7 +164,7 @@ class Main():
         print('Ingrese la coordenada de la columna:')
         column = int(input())
         location = (row, column)
-        print('Ingrese la orientación en la que desea jugar la palabra:')
+        print('Ingrese la orientación de la palabra:')
         print('1. Horizontal')
         print('2. Vertical')
         orientation = int(input())
