@@ -4,18 +4,33 @@
 
 "ScrabbleGame is a game where 2 to 4 people can play. Each player takes turns placing words on the board, starting from the center. All words must be connected. Each player has a Rack, which is their bag of letters. With these letters, they must create words. Each letter tile has different values, which are used to determine the winner at the end. The game ends when there are no more letters left for the players. (The words are from the Spanish dictionary and will be validated by the game.) "
 
-<h2 align="center"> Steps to run in terminals </h2>
-
-
-1°-install docker, if you already have it installed much better!
-2°-install git in terminal
-3°- clone the repository using: git clone https://github.com/um-computacion-tm/scrabble-2023-lgsosa
-4°- navigate to the repository: cd/.../scrabble-2023-lgsosa
-5°- build the docker image: -docker build -t image_name (in the name of the image give it whatever name you want, I called it dockerscrabble)
-6°- Run Docker image: docker run -it image_name (In my case it would be: docker run -it dockerscrabble)
-
-
-                🏁 Proyecto Finalizado 🏁
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    h2 {
+      text-align: center;
+    }
+    .steps {
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h2>Steps to run in terminals</h2>
+  <div class="steps">
+    <ol>
+      <li>Install Docker, if you already have it installed much better!</li>
+      <li>Install Git in the terminal</li>
+      <li>Clone the repository using: <code>git clone https://github.com/um-computacion-tm/scrabble-2023-lgsosa</code></li>
+      <li>Navigate to the repository: <code>cd /.../scrabble-2023-lgsosa</code></li>
+      <li>Build the Docker image: <code>docker build -t image_name</code> (in the name of the image give it whatever name you want, I called it dockerscrabble)</li>
+      <li>Run Docker image: <code>docker run -it image_name</code> (In my case it would be: <code>docker run -it dockerscrabble</code>)</li>
+    </ol>
+  </div>
+  <p>🏁 Proyecto Finalizado 🏁</p>
+</body>
+</html>
 
 # maintainability
 [![Maintainability](https://api.codeclimate.com/v1/badges/501cec3723d1db83d4e8/maintainability)](https://codeclimate.com/github/um-computacion-tm/scrabble-2023-lgsosa/maintainability)
