@@ -190,7 +190,7 @@ Seleccion: '''
             if scrabble_game.board.validate(word, location, orientation):
                 word_without_intersection = scrabble_game.board.get_word_without_intersections(word, location, orientation)
                 if scrabble_game.current_player.has_tiles(word_without_intersection):
-                    tiles = scrabble_game.current_player.take_tiles(word_without_intersection)
+                    tiles = scrabble_game.current_player.take_tiles(word)
                     scrabble_game.current_player.points += scrabble_game.board.calculate_word_value(word, location, orientation)
                     scrabble_game.board.put_word(tiles, location, orientation)
                     scrabble_game.current_player.give_tiles(scrabble_game.bag_tiles.take(7 - len(scrabble_game.current_player.lectern)))
@@ -201,6 +201,8 @@ Seleccion: '''
                 print('La palabra no es válida o no se puede jugar en esa posición')
 
         scrabble_game.next_turn()
+
+
 
         
 
