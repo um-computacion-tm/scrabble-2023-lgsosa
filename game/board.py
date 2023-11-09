@@ -266,6 +266,10 @@ class Board:
         if search is None:
             raise DictionaryConnectionError()
         return search.meta_description != 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
-        
+
+
+
+
+
 class DictionaryConnectionError(Exception):
     ...
