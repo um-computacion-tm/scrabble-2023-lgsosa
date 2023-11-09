@@ -8,12 +8,7 @@
 <html>
 <head>
   <style>
-    h2 {
-      text-align: center;
-    }
-    .steps {
-      text-align: left;
-    }
+    
   </style>
 </head>
 <body>
