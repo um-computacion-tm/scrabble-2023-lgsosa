@@ -265,7 +265,10 @@ Seleccion: '''
    
 if __name__ == "__main__":
     main = Main()
-    main.play()
-    main.play_game()
-
-                
+    players_count = main.main()
+    scrabble_game = ScrabbleGame(players_count=players_count)
+    for i in range(players_count):
+        name = input("Ingrese el nombre del jugador " + str(i + 1) + ": ")
+        scrabble_game.players[i].name = name
+    scrabble_game.current_player = scrabble_game.players[0]
+    main.play_game(scrabble_game)
