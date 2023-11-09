@@ -7,9 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    
-  </style>
+
 </head>
 <body>
   <h2>Steps to run in terminals</h2>
