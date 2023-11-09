@@ -22,7 +22,7 @@
     <ol>
       <li>Install Docker, if you already have it installed much better!</li>
       <li>Install Git in the terminal</li>
-      <li>Clone the repository using: <code>git clone https://github.com/um-computacion-tm/scrabble-2023-lgsosa</code></li>
+      <li>Clone the repository using: <code>git clone https://github.com/um-computacion-tm/scrabble-2023-lgsosa.git</code></li>
       <li>Navigate to the repository: <code>cd /.../scrabble-2023-lgsosa</code></li>
       <li>Build the Docker image: <code>docker build -t image_name</code> (in the name of the image give it whatever name you want, I called it cd1a61941a13)</li>
       <li>Run Docker image: <code>docker run -it image_name</code> (In my case it would be: <code>docker run -it cd1a61941a13 </code>)</li>
