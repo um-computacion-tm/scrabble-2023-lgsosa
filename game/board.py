@@ -12,26 +12,18 @@ class Board:
         view = ' \n'
         view += '    0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 \n'
         letters = 'ABCDEFGHIJKLMNO'
+        
         for i, row in enumerate(self.grid):
             view += f"{letters[i]}   "
             for cell in row:
                 if cell.tile is None:
-                    if cell.multiplier_type == 'letter' and cell.multiplier == 3:
-                        view += f"3L|"
-                    elif cell.multiplier_type == 'letter' and cell.multiplier == 2:
-                        view += f"2L|"
-                    elif cell.multiplier_type == 'word' and cell.multiplier == 3:
-                        view += f"3W|"
-                    elif cell.multiplier_type == 'word' and cell.multiplier == 2:
-                        view += f"2W|"
-                    else:
-                        view += f"  |"
+                    multiplier = f"{cell.multiplier_type[0].upper()}{cell.multiplier}" if cell.multiplier_type else '  '
+                    view += f"{multiplier}|"
                 else:
-                    if len(cell.tile) == 2:
-                        view += f"{cell.tile}|"
-                    else:
-                        view += f"{cell.tile} |"
+                    view += f"{cell.tile:2}|"
+
             view += "\n"
+
         return view
     
 
@@ -49,28 +41,6 @@ class Board:
                     multiplier = 3 if (row, col) in ((0, 0), (7, 0), (0, 7), (0, 14), (7, 14), (14, 0), (14, 7), (14, 14)) else 2
                     cell.multiplier = multiplier
                     cell.multiplier_type = 'word'
-
-    def calculate_word_value(self, word, pos, orientation, first=True):
-        horizontal = True if orientation.upper() == 'H' else False
-        word = Player().split_word(word)
-        points = 0
-        word_multiplier = 1
-        i = 0
-        for letter in word:
-            cell, invert_cell, side_cell = self.get_cells(pos, i, horizontal)
-            available = not cell.tile and first
-            j = 1
-            if invert_cell and invert_cell.tile and available:
-                side_word, j = self.get_side_word(invert_cell, i, (horizontal,True), pos, letter)
-                points += self.calculate_word_value(side_word, (pos[0] - j + 1, pos[1] + i) if horizontal else (pos[0] + i, pos[1] - j + 1), not horizontal, False)
-            elif side_cell and side_cell.tile and available:
-                side_word, j = self.get_side_word(side_cell, i, (horizontal,False), pos, letter)
-                points += self.calculate_word_value(side_word, (pos[0], pos[1] + i) if horizontal else (pos[0] + i, pos[1]), not horizontal, False)
-            letter_value = self.get_letter_value(letter)
-            word_multiplier, points = self.update_multipliers(cell, letter_value, word_multiplier, points, first)
-            i += 1
-        points = points * word_multiplier
-        return points
 
     def get_cells(self, pos, i, horizontal):
         cell = self.grid[pos[0]][pos[1] + i] if horizontal else self.grid[pos[0] + i][pos[1]]
@@ -165,6 +135,28 @@ class Board:
             is_valid, intersections = result[0], result[1]
         return [is_valid, intersections]
     
+    def calculate_word_value(self, word, pos, orientation, first=True):
+        horizontal = orientation.upper() == 'H'
+        word = Player().split_word(word)
+        points = 0
+        word_multiplier = 1
+
+        for i, letter in enumerate(word):
+            cell, invert_cell, side_cell = self.get_cells(pos, i, horizontal)
+            available = not cell.tile and i == 0
+
+            if invert_cell and invert_cell.tile and available:
+                side_word, j = self.get_side_word(invert_cell, i, (horizontal, True), pos, letter)
+                points += self.calculate_word_value(side_word, (pos[0] - j + 1, pos[1] + i) if horizontal else (pos[0] + i, pos[1] - j + 1), not horizontal, False)
+            elif side_cell and side_cell.tile and available:
+                side_word, j = self.get_side_word(side_cell, i, (horizontal, False), pos, letter)
+                points += self.calculate_word_value(side_word, (pos[0], pos[1] + i) if horizontal else (pos[0] + i, pos[1]), not horizontal, False)
+
+            letter_value = self.get_letter_value(letter)
+            word_multiplier, points = self.update_multipliers(cell, letter_value, word_multiplier, points, i == 0)
+
+        return points * word_multiplier
+
     def validate_not_empty(self, word, pos, orientation):
         horizontal = True if orientation.upper() == 'H' else False
         intersections = 0
@@ -185,44 +177,34 @@ class Board:
             return self.validate_not_empty(word, location, orientation)
         return False
             
-    def validate_right(self, word, location, orientation):
+    def validate_side(self, word, location, orientation, direction):
         row = location[0]
         column = location[1]
-        for i in range (len(word)):
-            cell = self.grid[row+i][column]
-            right_cell = self.grid[row+i][column+1]
-            if cell.tile == None:
-                if right_cell.tile is not None:
-                    temporal_word = word[i]
-                    j = 1
-                    temporal_rcell = right_cell
-                    while temporal_rcell.tile != None:
-                        temporal_word += temporal_rcell.tile.letter
-                        temporal_rcell = self.grid[row+i][column + 1 + j]
-                        j += 1
-                    if self.validate_word(temporal_word):
-                        return True
-        return False     
+        step = 1 if direction == 'right' else -1
 
-    def validate_left(self, word, location, orientation):
-        row = location[0]
-        column = location[1]
-        for i in range (len(word)):
-            cell = self.grid[row+i][column]
-            left_cell = self.grid[row+i][column-1]
-            if cell.tile == None:
-                if left_cell.tile is not None:
+        for i in range(len(word)):
+            cell = self.grid[row + i][column]
+            side_cell = self.grid[row + i][column + step]
+
+            if cell.tile is None:
+                if side_cell.tile is not None:
                     temporal_word = word[i]
                     j = 1
-                    temporal_lcell = left_cell
-                    while temporal_lcell.tile != None:
-                        temporal_word += temporal_lcell.tile.letter
-                        temporal_lcell = self.grid[row+i][column - 1 - j]
+                    temporal_scell = side_cell
+
+                    while temporal_scell.tile is not None:
+                        temporal_word += temporal_scell.tile.letter
+                        temporal_scell = self.grid[row + i][column + step + j]
                         j += 1
-                    temporal_word = temporal_word[::-1]
+
+                    if direction == 'left':
+                        temporal_word = temporal_word[::-1]
+
                     if self.validate_word(temporal_word):
                         return True
-        return False       
+
+        return False
+
             
     def put_word(self,word,location,orientation):
         horizontal = True if orientation.upper() == 'H' else False
@@ -250,7 +232,6 @@ class Board:
         return word.upper()
 
 
-    
     def get_word_without_intersections(self,word,pos,horizontal):
         result = ''
         for i in range(len(word)):
@@ -258,7 +239,6 @@ class Board:
             if not cell:
                 result += word[i]
         return result
-
     
     def validate_word(self, word):
         dle.set_log_level(log_level = 'CRITICAL')
@@ -266,9 +246,6 @@ class Board:
         if search is None:
             raise DictionaryConnectionError()
         return search.meta_description != 'Versión electrónica 23.6 del «Diccionario de la lengua española», obra lexicográfica académica por excelencia.'
-
-
-
 
 
 class DictionaryConnectionError(Exception):
