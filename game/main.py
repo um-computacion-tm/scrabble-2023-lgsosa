@@ -119,13 +119,18 @@ Seleccion: '''
     
     def menu_board(self, scrabble_game):
         while True:
-            option = int(input(self.menu('board', scrabble_game )))
-            if option == 1:
-                print (scrabble_game.view_board())
-            elif option == 2:
+            if scrabble_game.current_player is not None:
+                option = int(input(self.menu('board', scrabble_game)))
+                if option == 1:
+                    print(scrabble_game.view_board())
+                elif option == 2:
+                    break
+                elif option != 1 and option != 2:
+                    print('Valor invalido')
+            else:
+                print('Error: No hay jugador actual configurado.')
                 break
-            elif option != 1 and option != 2:
-                print ('Valor invalido')
+
 
     def menu_lectern(self, scrabble_game):
         while True:
@@ -157,18 +162,22 @@ Seleccion: '''
                 print ("Valor no valido")
     
     def menu_put_word(self, scrabble_game): 
-        word = input('Ingrese una palabra:')
+        word = input('Ingrese una palabra: ')
+        
+        # Agrega una verificación para asegurarte de que la palabra no esté vacía
+        if not word:
+            print('La palabra no puede estar vacía')
+            return
+
         print(f'Rack del jugador {scrabble_game.current_player.name}: Letras -> {scrabble_game.current_player.view_lectern()}')
         print('Ingrese la coordenada de la fila:')
         row = int(input())
         print('Ingrese la coordenada de la columna:')
         column = int(input())
         location = (row, column)
-        print('Ingrese la orientación de la palabra:')
-        print('1. Horizontal')
-        print('2. Vertical')
-        orientation = int(input())
         
+        # Corrige la lógica de la orientación
+        orientation = int(input('Ingrese la orientación de la palabra (1. Horizontal / 2. Vertical): '))
         if orientation == 1:
             orientation = 'H'
         elif orientation == 2:
@@ -200,11 +209,8 @@ Seleccion: '''
             else:
                 print('La palabra no es válida o no se puede jugar en esa posición')
 
-        scrabble_game.next_turn()
+            scrabble_game.next_turn()
 
-
-
-        
 
     def menu_change_tiles(self, scrabble_game):
         while True:

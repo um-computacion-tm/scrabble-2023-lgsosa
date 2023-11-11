@@ -5,7 +5,7 @@ class Tile:
         self.letter = letter
         self.value = value
 
-    def __repr__(self):
+    def __str__(self):
         return self.letter
 
 class Joker(Tile):

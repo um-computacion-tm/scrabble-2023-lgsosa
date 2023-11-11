@@ -17,3 +17,4 @@ class Cell:
             return self.tile.value * self.multiplier
         else:
             return self.tile.value
+        
